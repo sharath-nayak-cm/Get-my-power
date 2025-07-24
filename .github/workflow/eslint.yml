@@ -1,0 +1,27 @@
+name: PR Lint check
+
+on:
+  pull_request:
+
+jobs:
+  PR-lint:
+    name: PR Lint
+    runs-on: ubuntu-latest
+
+  steps:
+    - name: Checkout code
+      uses: actions/Checkout@v3
+
+    - name: Setup node
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+
+    - name: install dependencies
+      run: npm ci
+
+    - name: run es-Lint
+      run |
+        npx eslint . --ext .ts
+
+    
