@@ -14,7 +14,7 @@ export const bookRestaurant = async (req: Request, res: Response) => {
 export const getBookings = async(req: Request, res: Response) => {
     try {
       const restaurantId = req.params.restaurantId;
-      // const userId = req.params.userId;
+      const userId = req.params.userId;
 
         const booking = await Booking.findById(restaurantId);
         res.json(booking);
