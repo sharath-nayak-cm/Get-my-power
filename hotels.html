@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurants in City</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .restaurant-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .restaurant-list li {
+            padding: 10px;
+            border-bottom: 1px solid #ccc;
+        }
+        .restaurant-list li:last-child {
+            border-bottom: none;
+        }
+        .pagination {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .pagination button {
+            margin: 0 5px;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+        }
+        .pagination button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Restaurants in City</h1>
+
+<ul id="restaurant-list" class="restaurant-list">
+    <!-- Restaurants will be populated here -->
+</ul>
+
+<div class="pagination">
+    <button id="prev-page" onclick="prevPage()">Previous</button>
+    <span id="page-info">Page 1 of X</span>
+    <button id="next-page" onclick="nextPage()">Next</button>
+</div>
+
+<script>
+    // Sample restaurant data
+    let restaurants = [
+        {name: "Restaurant 1", cuisine: "Italian"},
+        {name: "Restaurant 2", cuisine: "Indian"},
+        {name: "Restaurant 3", cuisine: "Chinese"},
+        {name: "Restaurant 4", cuisine: "Mexican"},
+        {name: "Restaurant 5", cuisine: "Italian"},
+        {name: "Restaurant 6", cuisine: "Indian"},
+        {name: "Restaurant 7", cuisine: "Chinese"},
+        {name: "Restaurant 8", cuisine: "Mexican"},
+        {name: "Restaurant 9", cuisine: "Italian"},
+        {name: "Restaurant 10", cuisine: "Indian"},
+        {name: "Restaurant 11", cuisine: "Chinese"},
+        {name: "Restaurant 12", cuisine: "Mexican"},
+    ];
+
+    let currentPage = 1;
+    const restaurantsPerPage = 5;
+
+    function displayRestaurants() {
+        const start = (currentPage - 1) * restaurantsPerPage;
+        const end = start + restaurantsPerPage;
+        const paginatedRestaurants = restaurants.slice(start, end);
+        const restaurantList = document.getElementById('restaurant-list');
+        restaurantList.innerHTML = '';
+
+        paginatedRestaurants.forEach(restaurant => {
+            const restaurantElement = document.createElement('li');
+            restaurantElement.textContent = `${restaurant.name} - ${restaurant.cuisine}`;
+            restaurantList.appendChild(restaurantElement);
+        });
+
+        document.getElementById('page-info').textContent = `Page ${currentPage} of ${Math.ceil(restaurants.length / restaurantsPerPage)}`;
+        document.getElementById('prev-page').disabled = currentPage === 1;
+        document.getElementById('next-page').disabled = currentPage === Math.ceil(restaurants.length / restaurantsPerPage);
+    }
+
+    function nextPage() {
+        if (currentPage < Math.ceil(restaurants.length / restaurantsPerPage)) {
+            currentPage++;
+            displayRestaurants();
+        }
+    }
+
+    function prevPage() {
+        if (currentPage > 1) {
+            currentPage--;
+            displayRestaurants();
+        }
+    }
+
+    // Initial display
+    displayRestaurants();
+</script>
+
+</body>
+</html>
